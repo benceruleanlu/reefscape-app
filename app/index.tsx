@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Text, View, TouchableOpacity, Keyboard } from "react-native";
 import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 import * as Network from 'expo-network';
+import axios, { Axios, AxiosError } from 'axios';
 
 export default function Index() {
 	const networkState = Network.useNetworkState();
@@ -15,10 +16,9 @@ export default function Index() {
 		return ipv4Regex.test(ip);
 	}
 
-
 	const checkConnection = async () => {
 		setStatus("Checking connection...");
-		setStatusCol("#aaaa00");
+		setStatusCol("#bbbb00");
 
 		Keyboard.dismiss();
 
@@ -31,7 +31,29 @@ export default function Index() {
 		if (!isValidIPv4(serverIP)) {
 			setStatus("Enter a valid IPv4 adress!");
 			setStatusCol("#bb0000");
+			return;
 		}
+
+		try {
+			const response = await axios.get(`http://${serverIP}:3000`);
+			setStatus("Got server response!");
+			setStatusCol("#00bb00");
+			console.log(response.data);
+			console.log(response.headers);
+		} catch (error: any) {
+			if (error.response) {
+				if (error.response.status >= 400 && error.response.status < 500) {
+					setStatus(`Client error ${error.response.status}`);
+				} else if (error.response.status >= 500) {
+					setStatus(`Server error ${error.response.status}`);
+				}
+			} else if (error.request) {
+				setStatus("Network error or timeout.");
+			} else {
+				setStatus("Unknown error");
+			}
+			setStatusCol("#bb0000");
+		} 	
 	}
 
 	return (
