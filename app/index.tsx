@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import { Text, View, TouchableOpacity, Keyboard } from "react-native";
 import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 import * as Network from 'expo-network';
-import axios, { Axios, AxiosError } from 'axios';
+import axios from 'axios';
+import { Asset } from 'expo-asset';
+import * as FileSystem from 'expo-file-system';
+import forge from 'node-forge';
 
 export default function Index() {
 	const networkState = Network.useNetworkState();
@@ -15,6 +18,27 @@ export default function Index() {
 		const ipv4Regex = /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
 		return ipv4Regex.test(ip);
 	}
+	
+	const serverCertAsset = Asset.fromModule(require('../assets/server-cert.pem'));
+	let serverCert: string;
+	serverCertAsset.downloadAsync().then(async () => {
+		if (serverCertAsset.localUri !== null) {
+			serverCert = await FileSystem.readAsStringAsync(serverCertAsset.localUri);
+		} 
+	});
+
+	function encrypt(data: string) {
+		const serverKey = forge.pki.certificateFromPem(serverCert).publicKey;
+		const encrypted = serverKey.encrypt(data, 'RSA-OAEP');
+		return forge.util.encode64(encrypted);
+	}
+
+	const { publicKey, privateKey } = forge.pki.rsa.generateKeyPair(512);
+	const publicKeyPem = forge.pki.publicKeyToPem(publicKey);
+	function decrypt(data: string) {
+		const decrypted = privateKey.decrypt(forge.util.decode64(data), 'RSA-OAEP');
+		return forge.util.encodeUtf8(decrypted);
+	}
 
 	const checkConnection = async () => {
 		setStatus("Checking connection...");
@@ -22,7 +46,7 @@ export default function Index() {
 
 		Keyboard.dismiss();
 
-		if (!networkState.isConnected || networkState.type !== Network.NetworkStateType.WIFI) {
+		if (!networkState.isConnected) {
 			setStatus("Wi-fi is not connected!");
 			setStatusCol("#bb0000");
 			return;
@@ -35,11 +59,16 @@ export default function Index() {
 		}
 
 		try {
-			const response = await axios.get(`http://${serverIP}:3000`);
-			setStatus("Got server response!");
-			setStatusCol("#00bb00");
-			console.log(response.data);
-			console.log(response.headers);
+			const token = (Math.floor(Math.random() * (900000000000000)) + 100000000000000).toString();
+			const response = await axios.post(`http://${serverIP}:3000`, {data: encrypt(token), key: publicKeyPem});
+			
+			if (decrypt(response.data) !== token) {
+				setStatus("Incorrect server.");
+				setStatusCol("#bb0000");
+			} else {
+				setStatus("Correct server!");
+				setStatusCol("#00bb00");
+			}
 		} catch (error: any) {
 			if (error.response) {
 				if (error.response.status >= 400 && error.response.status < 500) {
