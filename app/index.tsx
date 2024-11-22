@@ -34,7 +34,7 @@ export default function Index() {
             color: "#000000",
             borderColor: "#000000",
             borderWidth: 2,
-            height: 35,
+            height: 50,
             width: 200,
           }}
           keyboardType="numeric"
