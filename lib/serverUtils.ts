@@ -2,7 +2,6 @@ import axios from "axios";
 import forge from "node-forge";
 import { Asset } from "expo-asset";
 import * as FileSystem from "expo-file-system";
-import { Keyboard } from "react-native";
 
 const serverCertAsset = Asset.fromModule(require("@/assets/server-cert.pem"));
 let serverCert: string;
@@ -39,8 +38,6 @@ export async function checkConnection(
 ) {
   setStatus("Checking connection...");
   setStatusCol("#bbbb00");
-
-  Keyboard.dismiss();
 
   if (!isValidIPv4(serverIP)) {
     setStatus("Enter a valid IPv4 address!");
