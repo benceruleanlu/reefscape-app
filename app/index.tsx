@@ -1,5 +1,12 @@
 import React, { useState } from "react";
-import { Text, View, Keyboard, Pressable, TextInput, StyleSheet } from "react-native";
+import {
+  Text,
+  View,
+  Keyboard,
+  Pressable,
+  TextInput,
+  StyleSheet,
+} from "react-native";
 import { checkConnection } from "@/lib/serverUtils";
 
 export default function Index() {

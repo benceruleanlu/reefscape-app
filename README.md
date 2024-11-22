@@ -14,7 +14,7 @@ Generate a certificate and private key pair with
 openssl req -newkey rsa:2048 -nodes -keyout server-key.pem -x509 -out server-cert.pem
 ```
 
-Move `server-key.pem` to the corresponding [reefscape-server](https://github.com/benceruleanlu/reefscape-server) and move `server-cert.pem` to `assets/` in the app. 
+Move `server-key.pem` to the corresponding [reefscape-server](https://github.com/benceruleanlu/reefscape-server) and move `server-cert.pem` to `assets/` in the app.
 
 3. Start the app
 
