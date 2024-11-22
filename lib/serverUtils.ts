@@ -76,3 +76,44 @@ export async function checkConnection(
     setStatusCol("#bb0000");
   }
 }
+
+export async function pingServer(
+  serverIP: string,
+  setStatus: (status: string) => void,
+  setStatusCol: (color: string) => void,
+) {
+  console.log("Pinging server...");
+
+  setStatus("Pinging server...");
+  setStatusCol("#bbbb00");
+
+  if (!isValidIPv4(serverIP)) {
+    setStatus("Enter a valid IPv4 address!");
+    setStatusCol("#bb0000");
+    return;
+  }
+
+  try {
+    const response = await axios.get(`http://${serverIP}:3000/ping`);
+    if (response.status === 200) {
+      setStatus("Server is reachable!");
+      setStatusCol("#00bb00");
+    } else {
+      setStatus(`Unexpected response: ${response.status}`);
+      setStatusCol("#bb0000");
+    }
+  } catch (error: any) {
+    if (error.response) {
+      if (error.response.status >= 400 && error.response.status < 500) {
+        setStatus(`Client error ${error.response.status}`);
+      } else if (error.response.status >= 500) {
+        setStatus(`Server error ${error.response.status}`);
+      }
+    } else if (error.request) {
+      setStatus("Network error or timeout.");
+    } else {
+      setStatus("Unknown error");
+    }
+    setStatusCol("#bb0000");
+  }
+}

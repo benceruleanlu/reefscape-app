@@ -7,7 +7,7 @@ import {
   TextInput,
   StyleSheet,
 } from "react-native";
-import { checkConnection } from "@/lib/serverUtils";
+import { checkConnection, pingServer } from "@/lib/serverUtils";
 
 export default function Index() {
   const [status, setStatus] = useState("Connection uncertain.");
@@ -36,7 +36,13 @@ export default function Index() {
         <Text style={styles.buttonText}>Check Connection</Text>
       </Pressable>
 
-      <Pressable onPress={() => {}} style={styles.button}>
+      <Pressable
+        onPress={() => {
+          Keyboard.dismiss();
+          pingServer(serverIP, setStatus, setStatusCol);
+        }}
+        style={styles.button}
+      >
         <Text style={styles.buttonText}>Ping Server</Text>
       </Pressable>
     </View>
