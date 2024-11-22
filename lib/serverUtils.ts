@@ -11,22 +11,22 @@ serverCertAsset.downloadAsync().then(async () => {
   }
 });
 
-export function isValidIPv4(ip: string): boolean {
+function isValidIPv4(ip: string): boolean {
   const ipv4Regex =
     /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/;
   return ipv4Regex.test(ip);
 }
 
-export function encrypt(data: string) {
+function encrypt(data: string) {
   const serverKey = forge.pki.certificateFromPem(serverCert).publicKey;
   const encrypted = serverKey.encrypt(data, "RSA-OAEP");
   return forge.util.encode64(encrypted);
 }
 
 const { publicKey, privateKey } = forge.pki.rsa.generateKeyPair(512);
-export const publicKeyPem = forge.pki.publicKeyToPem(publicKey);
+const publicKeyPem = forge.pki.publicKeyToPem(publicKey);
 
-export function decrypt(data: string) {
+function decrypt(data: string) {
   const decrypted = privateKey.decrypt(forge.util.decode64(data), "RSA-OAEP");
   return forge.util.encodeUtf8(decrypted);
 }

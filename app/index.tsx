@@ -35,6 +35,10 @@ export default function Index() {
       >
         <Text style={styles.buttonText}>Check Connection</Text>
       </Pressable>
+
+      <Pressable onPress={() => {}} style={styles.button}>
+        <Text style={styles.buttonText}>Ping Server</Text>
+      </Pressable>
     </View>
   );
 }
