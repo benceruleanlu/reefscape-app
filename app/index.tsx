@@ -5,7 +5,7 @@ import {
   TextInput,
 } from "react-native-gesture-handler";
 import * as Network from "expo-network";
-import { checkConnection } from "./lib/serverUtils";
+import { checkConnection } from "@/lib/serverUtils";
 
 export default function Index() {
   const networkState = Network.useNetworkState();
