@@ -1,11 +1,16 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { View, Text, TextInput, Pressable, Keyboard, StyleSheet } from "react-native";
-import { connect } from "@/lib/serverUtils";
+import { connect, close } from "@/lib/serverUtils";
 
 export default function Index() {
   const [status, setStatus] = useState("Connection uncertain.");
   const [statusCol, setStatusCol] = useState("#000000");
   const [serverIP, setServerIP] = useState("");
+  const [studentNumber, setStudentNumber] = useState("");
+
+  useEffect(function () {
+    return function () { close(); };
+  });
 
   return (
     <View style={styles.container}>
@@ -19,10 +24,18 @@ export default function Index() {
         value={serverIP}
       />
 
+      <Text style={styles.labelText}>Student Number:</Text>
+      <TextInput
+        style={styles.input}
+        keyboardType="number-pad"
+        onChangeText={setStudentNumber}
+        value={studentNumber}
+      />
+
       <Pressable
         onPress={() => {
           Keyboard.dismiss();
-          connect(serverIP, setStatus, setStatusCol);
+          connect(serverIP, Number(studentNumber), setStatus, setStatusCol);
         }}
         style={styles.button}
       >

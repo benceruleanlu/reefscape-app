@@ -4,10 +4,14 @@ function isValidIPv4(ip: string): boolean {
   return ipv4Regex.test(ip);
 }
 
-let socket;
-export function connect(serverIP: string, setStatus: (status: string) => void, setStatusCol: (color: string) => void,) {
-  setStatus("Checking connection...");
-  setStatusCol("#bbbb00");
+let socket: WebSocket | undefined;
+let connected: boolean = false;
+export function connect(serverIP: string, studentNumber: number, setStatus: (status: string) => void, setStatusCol: (color: string) => void,) {
+  if (connected) {
+    setStatus("Already connected.");
+    setStatusCol("#00bb00");
+    return;
+  }
 
   if (!isValidIPv4(serverIP)) {
     setStatus("Enter a valid IPv4 address!");
@@ -15,17 +19,22 @@ export function connect(serverIP: string, setStatus: (status: string) => void, s
     return;
   }
 
+  setStatus("Checking connection...");
+  setStatusCol("#bbbb00");
+
   socket = new WebSocket(`ws://${serverIP}:4308`);
 
   socket.onopen = () => {
     setStatus("Connected!");
     setStatusCol("#00bb00");
+    connected = true;
+
+    if (socket) socket.send(JSON.stringify({ action: "verify", studentNumber: studentNumber }));
   };
 
   socket.onmessage = (event) => {
-    setStatus("Message received!");
+    setStatus(`Message received: ${event.data}`);
     setStatusCol("#00bb00");
-    console.log(event.data);
   };
 
   socket.onerror = (error) => {
@@ -35,7 +44,22 @@ export function connect(serverIP: string, setStatus: (status: string) => void, s
   };
 
   socket.onclose = () => {
+    if (!connected) return;
     setStatus("Disconnected.");
     setStatusCol("#bb0000");
+    connected = false;
   };
+}
+
+export function send(data: any) {
+  if (!socket) return;
+  if (!connected) return;
+
+  socket.send(data);
+}
+
+export function close() {
+  if (socket && connected) {
+    socket.close();
+  }
 }
