@@ -10,7 +10,7 @@ export default function Index() {
 
   useEffect(function () {
     return function () { close(); };
-  });
+  }, []);
 
   return (
     <View style={styles.container}>
