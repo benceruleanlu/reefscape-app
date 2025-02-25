@@ -1,6 +1,5 @@
 import { Image } from "expo-image";
-import { StatusBar } from "expo-status-bar";
-import { Text, View, Dimensions} from "react-native";
+import { Text, Dimensions} from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import LabelledTextInput from "@/components/LabelledTextInput";

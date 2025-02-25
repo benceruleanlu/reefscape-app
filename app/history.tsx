@@ -1,19 +1,33 @@
-import { useLocalSearchParams, useRouter } from "expo-router";
+import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import * as SQLite from 'expo-sqlite';
-import { FlatList, ScrollView, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, TouchableOpacity, View } from "react-native";
 import { globalStyles } from "@/globals";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "@/components/CustomButton";
+import { useCallback, useState } from "react";
+
+type SQLiteRes = { name: string }
 
 export default function History() {
   const router = useRouter();
 
-  //const db = SQLite.openDatabaseSync("events");
   const params = useLocalSearchParams();
 
   function newEvent() {
     router.push("./newEvent")
   }
+
+  function getList() { return db.getAllSync<SQLiteRes>("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%';") }
+
+  const db = SQLite.openDatabaseSync("events");
+  const [events, setEvents] = useState(getList());
+
+  useFocusEffect(
+    useCallback(() => {
+      setEvents(getList())
+      return () => {}
+    }, [])
+  )
 
   return (
     <View style={globalStyles.rootView}>
@@ -28,9 +42,9 @@ export default function History() {
       </View>
 
       <FlatList
-        style={{ padding: 10 }}
+        style={{ paddingTop: 10, paddingHorizontal: 10 }}
         showsVerticalScrollIndicator={false}
-        data={['testEvent1', 'testEvent2', 'testEvent3', 'testEvent4', 'testEvent5', 'testEvent6', 'testEvent7', 'testEvent8', 'testEvent9', 'testEvent10', 'testEvent11', 'testEvent12', 'testEvent13', 'testEvent14', 'testEvent15', 'testEvent16', 'testEvent17', 'testEvent18', 'testEvent19', 'testEvent20']}
+        data={events}
         renderItem={({item}) =>
           <TouchableOpacity 
             style={{
@@ -39,14 +53,14 @@ export default function History() {
               paddingLeft: 20,
               justifyContent: "center",
               borderRadius: 8,
-              marginTop: 10
+              marginBottom: 10
             }}
             onPress={() => {
-              params.event = item
+              params.event = item.name
               router.push({ pathname: './viewEvent', params: params })
             }}
           >
-            <Text style={{ textAlign: "left", fontSize: 18, fontWeight: "600" }}>{item}</Text>
+            <Text style={{ textAlign: "left", fontSize: 18, fontWeight: "600" }}>{item.name}</Text>
           </TouchableOpacity>
         }
       />
@@ -57,7 +71,7 @@ export default function History() {
         backgroundColor: "white"
       }}>
         <CustomButton
-          touchableProps={{ onPress: newEvent, style: { marginTop: 12 } }}
+          touchableProps={{ onPress: newEvent, style: { marginTop: 10 } }}
           text="New Event"
         />
       </View>
