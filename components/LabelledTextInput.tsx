@@ -1,14 +1,14 @@
-import { StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
+import { DimensionValue, StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
 
 type LabelledTextInputProps = {
-  textInputProps: TextInputProps,
+  textInputProps?: TextInputProps,
   label: string,
+  marginTop?: DimensionValue
 }
 
 export default function LabelledTextInput(props: LabelledTextInputProps) {
-
   return (
-    <View style={{ height: 70, marginTop: 3 }}>
+    <View style={{ height: 70, marginTop: props.marginTop }}>
       <TextInput 
         {...props.textInputProps}
         style={styles.textInput}
@@ -28,8 +28,8 @@ const styles = StyleSheet.create({
     marginTop: 7,
     paddingLeft: 20,
     color: "#666666",
-    fontSize: 15,
-    fontWeight: "400"
+    fontSize: 18,
+    fontWeight: "500"
   },
   
   textInputLabel: { 

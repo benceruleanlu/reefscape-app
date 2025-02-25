@@ -1,9 +1,12 @@
 import { Image } from "expo-image";
 import { StatusBar } from "expo-status-bar";
-import { Text, View, TextInput, TouchableOpacity, StyleSheet, ScrollView, KeyboardAvoidingView} from "react-native";
+import { Text, View, Dimensions} from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import LabelledTextInput from "@/components/LabelledTextInput";
+import ViewTemplate from "@/components/ViewTemplate";
+import CustomButton from "@/components/CustomButton";
+import "@/globals"
 
 export default function Index() {
   const router = useRouter();
@@ -11,50 +14,39 @@ export default function Index() {
   const [teamNumber, setTeamNumber] = useState("");
   const [username, setUsername] = useState("");
 
+  function nextScreen() {
+    router.push({ pathname: "./history", params: { teamNumber: teamNumber, username: username } });
+  }
+
+  const height = Dimensions.get('window').height;
+
   return (
-    <KeyboardAvoidingView
-      behavior="position"
-      keyboardVerticalOffset={-250}
-      style={{
-        flex: 1,
-        backgroundColor: "white",
-        justifyContent: "center",
-        alignItems: "center",
-      }}
+    <ViewTemplate
+      avoidingViewProps={{ keyboardVerticalOffset: 330-height*251/420 }}
+      scrollViewProps={{ scrollEnabled: false }}
     >
-      <ScrollView
-        contentContainerStyle={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <StatusBar style="dark"/>
+      <Image 
+        source={require("../assets/images/frc_reefscape.gif")}
+        style={{ height: height*2/7, marginTop: height/12 }}
+        contentFit="contain"
+      />
 
-        <Image 
-          source={require("../assets/images/frc_reefscape.gif")}
-          style={{ objectFit: "contain", width: 200, height: 250, marginTop: 100 }}
-        />
+      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "left", marginTop: height/30 }}>Scout Offline</Text>
 
-        <View style={{ width: 320, height: 300, marginTop: 35 }}>
-          <Text style={{ fontSize: 17, fontWeight: "bold", textAlign: "left" }}>Scout Offline</Text>
+      <LabelledTextInput textInputProps={{
+        onChangeText: setTeamNumber,
+        value: teamNumber,
+        keyboardType: "number-pad",
+      }} marginTop={15} label="Team Number"/>
 
-          <LabelledTextInput textInputProps={{
-            onChangeText: setTeamNumber,
-            value: teamNumber,
-            keyboardType: "number-pad"
-          }} label="Team Number"/>
+      <LabelledTextInput textInputProps={{
+        onChangeText: setUsername,
+        value: username,
+        autoCorrect: false,
+      }} marginTop={5} label="Username"/>
 
-          <LabelledTextInput textInputProps={{
-            onChangeText: setUsername,
-            value: username,
-          }} label="Username"/>
-
-          <TouchableOpacity style={{ width: 320, height: 40, borderRadius: 20, backgroundColor: "#0083AE", marginTop: 15, justifyContent: "center" }}>
-            <Text style={{ color: "white", textAlign: "center", fontSize: 15, fontWeight: "bold" }}>Let's go scouting!</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
-    </KeyboardAvoidingView>
+      <CustomButton touchableProps={{ onPress: nextScreen, style: { marginTop: 15 } }} text="Let's go scouting!"/>
+    </ViewTemplate>
   );
 }
 
