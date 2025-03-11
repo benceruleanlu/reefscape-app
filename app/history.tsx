@@ -1,10 +1,11 @@
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import * as SQLite from 'expo-sqlite';
-import { FlatList, Text, TouchableOpacity, View } from "react-native";
+import { FlatList, Text, View } from "react-native";
 import { globalStyles } from "@/globals";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "@/components/CustomButton";
 import { useCallback, useState } from "react";
+import CustomListItem from "@/components/CustomListItem";
 
 type SQLiteRes = { name: string }
 
@@ -46,22 +47,13 @@ export default function History() {
         showsVerticalScrollIndicator={false}
         data={events}
         renderItem={({item}) =>
-          <TouchableOpacity 
-            style={{
-              height: 40,
-              backgroundColor: "#EEEEEE",
-              paddingLeft: 20,
-              justifyContent: "center",
-              borderRadius: 8,
-              marginBottom: 10
-            }}
+          <CustomListItem 
             onPress={() => {
-              params.event = item.name
+              params.eventName = item.name
               router.push({ pathname: './viewEvent', params: params })
             }}
-          >
-            <Text style={{ textAlign: "left", fontSize: 18, fontWeight: "600" }}>{item.name}</Text>
-          </TouchableOpacity>
+            text={item.name}
+          />
         }
       />
 

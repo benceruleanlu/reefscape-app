@@ -1,4 +1,6 @@
-import { StyleSheet } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
+
+export const height = Dimensions.get('window').height
 
 export const globalStyles = StyleSheet.create({
   rootView: {
@@ -7,5 +9,11 @@ export const globalStyles = StyleSheet.create({
     paddingTop: 25,
     paddingBottom: 25,
     backgroundColor: "white"
+  },
+
+  smallTitle: {
+    fontSize: 20, 
+    fontWeight: "bold", 
+    textAlign: "left"
   }
 });

@@ -1,10 +1,11 @@
 import CustomButton from "@/components/CustomButton";
 import * as SQLite from 'expo-sqlite';
 import LabelledTextInput from "@/components/LabelledTextInput";
-import ViewTemplate from "@/components/ViewTemplate";
 import { useState } from "react";
-import { Dimensions, Text } from "react-native";
+import { Text } from "react-native";
 import { useRouter } from "expo-router";
+import { height } from "@/globals";
+import ViewTemplate from "@/components/ViewTemplate";
 
 export default function NewEvent() {
   const router = useRouter();
@@ -17,13 +18,8 @@ export default function NewEvent() {
     router.back()
   }
 
-  const height = Dimensions.get('window').height;
-
   return (
-    <ViewTemplate
-      avoidingViewProps={{ keyboardVerticalOffset: -height }}
-      scrollViewProps={{ scrollEnabled: false }}
-    >
+    <ViewTemplate>
       <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "left", marginTop: height/4 }}>Add New Event</Text>
 
       <LabelledTextInput textInputProps={{

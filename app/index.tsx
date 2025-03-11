@@ -1,11 +1,12 @@
 import { Image } from "expo-image";
-import { Text, Dimensions} from "react-native";
+import { Text } from "react-native";
 import { useRouter } from "expo-router";
 import { useState } from "react";
 import LabelledTextInput from "@/components/LabelledTextInput";
 import ViewTemplate from "@/components/ViewTemplate";
 import CustomButton from "@/components/CustomButton";
 import "@/globals"
+import { globalStyles, height } from "@/globals";
 
 export default function Index() {
   const router = useRouter();
@@ -17,20 +18,15 @@ export default function Index() {
     router.push({ pathname: "./history", params: { teamNumber: teamNumber, username: username } });
   }
 
-  const height = Dimensions.get('window').height;
-
   return (
-    <ViewTemplate
-      avoidingViewProps={{ keyboardVerticalOffset: 330-height*251/420 }}
-      scrollViewProps={{ scrollEnabled: false }}
-    >
+    <ViewTemplate>
       <Image 
         source={require("../assets/images/frc_reefscape.gif")}
-        style={{ height: height*2/7, marginTop: height/12 }}
+        style={{ height: height*1/4, marginTop: height/12 }}
         contentFit="contain"
       />
 
-      <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "left", marginTop: height/30 }}>Scout Offline</Text>
+      <Text style={[globalStyles.smallTitle, { marginTop: height/30 }]}>Scout Offline</Text>
 
       <LabelledTextInput textInputProps={{
         onChangeText: setTeamNumber,
@@ -44,7 +40,7 @@ export default function Index() {
         autoCorrect: false,
       }} marginTop={5} label="Username"/>
 
-      <CustomButton touchableProps={{ onPress: nextScreen, style: { marginTop: 15 } }} text="Let's go scouting!"/>
+      <CustomButton touchableProps={{ onPress: nextScreen, style: { marginTop: 15 } }} text="Scout Offline"/>
     </ViewTemplate>
   );
 }
