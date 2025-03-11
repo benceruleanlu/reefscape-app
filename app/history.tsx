@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import CustomButton from "@/components/CustomButton";
 import { useCallback, useState } from "react";
 import CustomListItem from "@/components/CustomListItem";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type SQLiteRes = { name: string }
 
@@ -31,7 +32,7 @@ export default function History() {
   )
 
   return (
-    <View style={globalStyles.rootView}>
+    <SafeAreaView style={globalStyles.rootView}>
       <StatusBar style="dark"/>
 
       <View style={{
@@ -67,6 +68,6 @@ export default function History() {
           text="New Event"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
   text: {
     textAlign: "left", 
     fontSize: 18, 
-    fontWeight: "600" 
+    fontWeight: "600",
+    fontFamily: "Inter"
   }
 })

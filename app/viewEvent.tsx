@@ -6,6 +6,7 @@ import { StatusBar } from "expo-status-bar";
 import { FlatList, Text, View } from "react-native";
 import { useCallback, useState } from "react";
 import CustomListItem from "@/components/CustomListItem";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 type SQLiteRes = {
   matchNumber: string
@@ -39,7 +40,7 @@ export default function ViewEvent() {
   }
 
   return (
-    <View style={globalStyles.rootView}>
+    <SafeAreaView style={globalStyles.rootView}>
       <StatusBar style="dark"/>
 
       <View style={{
@@ -79,6 +80,6 @@ export default function ViewEvent() {
           text="New Match"
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }

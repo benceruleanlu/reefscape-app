@@ -36,7 +36,8 @@ const styles = StyleSheet.create({
     position: "absolute", 
     left: 10,
     fontWeight: "600",
-    fontSize: 13, 
+    fontSize: 13,
+    fontFamily: "Inter",
     color: "#666666",
     backgroundColor: "white" 
   }

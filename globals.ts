@@ -5,9 +5,8 @@ export const height = Dimensions.get('window').height
 export const globalStyles = StyleSheet.create({
   rootView: {
     flex: 1,
-    padding: 40,
-    paddingTop: 25,
-    paddingBottom: 25,
+    paddingHorizontal: 40,
+    paddingVertical: 20,
     backgroundColor: "white"
   },
 
