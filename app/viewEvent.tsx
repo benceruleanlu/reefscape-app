@@ -1,6 +1,6 @@
 import CustomButton from "@/components/CustomButton";
 import * as SQLite from 'expo-sqlite';
-import { globalStyles } from "@/globals";
+import { colours, globalStyles } from "@/globals";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { FlatList, Text, View } from "react-native";
@@ -44,7 +44,7 @@ export default function ViewEvent() {
       <StatusBar style="dark"/>
 
       <View style={{
-        borderBottomColor: "#666666",
+        borderBottomColor: colours.border,
         borderBottomWidth: 2,
         backgroundColor: "white"
       }}>
@@ -66,19 +66,20 @@ export default function ViewEvent() {
       />
 
       <View style={{
-        borderTopColor: "#666666",
+        borderTopColor: colours.border,
         borderTopWidth: 2,
         backgroundColor: "white",
         flexDirection: "row"
       }}>
         <CustomButton
-          touchableProps={{ onPress: deleteEvent, style: { marginTop: 10, marginRight: 5, backgroundColor: "#942A2A", flex: 2 } }}
-          text="Delete Event"
-        />
+          onPress={deleteEvent}
+          style={{marginTop: 10, marginRight: 5, backgroundColor: "#942A2A", flex: 2}}
+        >Delete Event</CustomButton>
+
         <CustomButton
-          touchableProps={{ onPress: newMatch, style: { marginTop: 10, marginLeft: 5, flex: 3 } }}
-          text="New Match"
-        />
+          onPress={newMatch}
+          style={{marginTop: 10, marginLeft: 5, flex: 3}}
+        >New Match</CustomButton>
       </View>
     </SafeAreaView>
   );

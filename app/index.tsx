@@ -40,7 +40,10 @@ export default function Index() {
         autoCorrect: false,
       }} marginTop={5} label="Username"/>
 
-      <CustomButton touchableProps={{ onPress: nextScreen, style: { marginTop: 15 } }} text="Scout Offline"/>
+      <CustomButton 
+        onPress={nextScreen}
+        style={{marginTop: 15}}
+      >Scout Offline</CustomButton>
     </ViewTemplate>
   );
 }

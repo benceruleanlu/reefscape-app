@@ -1,7 +1,7 @@
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import * as SQLite from 'expo-sqlite';
 import { FlatList, Text, View } from "react-native";
-import { globalStyles } from "@/globals";
+import { colours, globalStyles } from "@/globals";
 import { StatusBar } from "expo-status-bar";
 import CustomButton from "@/components/CustomButton";
 import { useCallback, useState } from "react";
@@ -36,7 +36,7 @@ export default function History() {
       <StatusBar style="dark"/>
 
       <View style={{
-        borderBottomColor: "#666666",
+        borderBottomColor: colours.border,
         borderBottomWidth: 2,
         backgroundColor: "white"
       }}>
@@ -59,14 +59,14 @@ export default function History() {
       />
 
       <View style={{
-        borderTopColor: "#666666",
+        borderTopColor: colours.border,
         borderTopWidth: 2,
         backgroundColor: "white"
       }}>
         <CustomButton
-          touchableProps={{ onPress: newEvent, style: { marginTop: 10 } }}
-          text="New Event"
-        />
+          onPress={newEvent}
+          style={{marginTop: 10}}
+        >New Event</CustomButton>
       </View>
     </SafeAreaView>
   );

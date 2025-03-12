@@ -28,7 +28,10 @@ export default function NewEvent() {
         autoCorrect: false,
       }} marginTop={15} label="Event Name"/>
 
-      <CustomButton touchableProps={{ onPress: addEvent, style: { marginTop: 15 } }} text="Add New Event"/>
+      <CustomButton 
+        onPress={addEvent}
+        style={{marginTop: 15}}
+      >Add New Event</CustomButton>
     </ViewTemplate>
   );
 }

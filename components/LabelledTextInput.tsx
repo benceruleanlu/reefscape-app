@@ -1,3 +1,4 @@
+import { colours } from "@/globals";
 import { DimensionValue, StyleSheet, Text, TextInput, TextInputProps, View } from "react-native";
 
 type LabelledTextInputProps = {
@@ -22,12 +23,12 @@ export default function LabelledTextInput(props: LabelledTextInputProps) {
 const styles = StyleSheet.create({
   textInput: {
     height: 60,
-    borderColor: "#666666",
+    borderColor: colours.border,
     borderWidth: 3,
     borderRadius: 5,
     marginTop: 8,
     paddingLeft: 20,
-    color: "#666666",
+    color: colours.border,
     fontSize: 18,
     fontWeight: "500"
   },
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     fontSize: 13,
     fontFamily: "Inter",
-    color: "#666666",
+    color: colours.border,
     backgroundColor: "white" 
   }
 })
