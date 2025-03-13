@@ -17,7 +17,7 @@ export default function NewMatch() {
   function nextPage() {
     params.matchNumber = matchNumber
     params.scoutedTeam = scoutedTeam
-    router.replace({ pathname: "./newMatch/autonScout", params: params })
+    router.replace({ pathname: "./newMatch/scoring", params: params })
   }
 
   return (
