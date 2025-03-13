@@ -7,6 +7,7 @@ import { FlatList, Text, View } from "react-native";
 import { useCallback, useState } from "react";
 import CustomListItem from "@/components/CustomListItem";
 import { SafeAreaView } from "react-native-safe-area-context";
+import * as ScreenOrientation from 'expo-screen-orientation';
 
 type SQLiteRes = {
   matchNumber: string
@@ -23,8 +24,12 @@ export default function ViewEvent() {
   const db = SQLite.openDatabaseSync("events");
   const [ matches, setMatches] = useState(getList());
 
+  async function effect() {
+    await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
+  }
   useFocusEffect(
     useCallback(() => {
+      effect()
       setMatches(getList())
       return () => {}
     }, [])

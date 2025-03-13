@@ -7,7 +7,7 @@ export default function CustomButton(props: TouchableOpacityProps) {
       {...props}
       style={[styles.button, props.style]}
     >
-      <Text style={styles.buttonText}>{props.children}</Text>
+      <Text adjustsFontSizeToFit style={styles.buttonText}>{props.children}</Text>
     </TouchableOpacity>
   );
 }

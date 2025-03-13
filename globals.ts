@@ -24,3 +24,27 @@ export const globalStyles = StyleSheet.create({
     textAlign: "left"
   }
 });
+
+export function getPointsAuton(data: AutonData) {
+  return ((data.leftStartingArea) ? 3 : 0) 
+    + 3*data.L1 
+    + 4*data.L2 
+    + 6*data.L3 
+    + 7*data.L4
+    + 6*data.processor
+    + 4*data.net
+}
+
+export type AutonData = {
+  leftStartingArea: boolean,
+
+  L1: number,
+  L2: number,
+  L3: number,
+  L4: number,
+
+  processor: number;
+  net: number
+}
+
+
