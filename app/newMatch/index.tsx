@@ -15,6 +15,7 @@ export default function NewMatch() {
   const [scoutedTeam, setScoutedTeam] = useState('')
 
   function nextPage() {
+    if (matchNumber == "" || scoutedTeam == "") return
     params.matchNumber = matchNumber
     params.scoutedTeam = scoutedTeam
     router.replace({ pathname: "./newMatch/scoring", params: params })

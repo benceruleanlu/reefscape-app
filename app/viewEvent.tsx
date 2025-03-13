@@ -10,7 +10,8 @@ import { SafeAreaView } from "react-native-safe-area-context";
 import * as ScreenOrientation from 'expo-screen-orientation';
 
 type SQLiteRes = {
-  matchNumber: string
+  matchNumber: number,
+  scoutedTeam: number
 }
 
 export default function ViewEvent() {
@@ -19,10 +20,14 @@ export default function ViewEvent() {
   const params = useLocalSearchParams()
   const event = params.eventName
 
-  function getList() { return db.getAllSync<SQLiteRes>(`SELECT matchNumber FROM ${event}`) }
+  function getList() { 
+    const db = SQLite.openDatabaseSync("events");
+    const res = db.getAllSync<SQLiteRes>(`SELECT matchNumber, scoutedTeam FROM "${event}"`) 
+    db.closeSync()
+    return res
+  }
 
-  const db = SQLite.openDatabaseSync("events");
-  const [ matches, setMatches] = useState(getList());
+  const [matches, setMatches] = useState<SQLiteRes[]>();
 
   async function effect() {
     await ScreenOrientation.lockAsync(ScreenOrientation.OrientationLock.PORTRAIT_UP)
@@ -36,8 +41,10 @@ export default function ViewEvent() {
   )
 
   function deleteEvent() {
+    const db = SQLite.openDatabaseSync("events");
+    db.runSync(`DROP TABLE "${event}"`)
+    db.closeSync()
     router.back()
-    db.runSync(`DROP TABLE ${event}`)
   }
 
   function newMatch() {
@@ -53,7 +60,7 @@ export default function ViewEvent() {
         borderBottomWidth: 2,
         backgroundColor: "white"
       }}>
-        <Text style={{ fontSize: 28, fontWeight: "bold", textAlign: "left" }}>{event} Matches</Text>
+        <Text style={{ fontSize: 28, fontWeight: "bold", textAlign: "left" }}>{event}</Text>
       </View>
 
       <FlatList
@@ -63,9 +70,9 @@ export default function ViewEvent() {
         renderItem={({item}) =>
           <CustomListItem 
             onPress={() => {
-              router.push({ pathname: './viewMatch', params: { eventName: event, matchNumber: item.matchNumber } })
+              router.push({ pathname: './viewMatch', params: { eventName: event, matchNumber: item.matchNumber, scoutedTeam: item.scoutedTeam } })
             }}
-            text={`Match ${item.matchNumber}`}
+            text={`Match #${item.matchNumber}`}
           />
         }
       />

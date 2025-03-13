@@ -5,7 +5,7 @@ import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomButton from "@/components/CustomButton";
 import { useCallback, useState } from "react";
-import DropDownPicker from 'react-native-dropdown-picker';
+import DropDownTemplate from "@/components/DropDownTemplate";
 
 export default function Scoring() {
   const router = useRouter();
@@ -15,7 +15,7 @@ export default function Scoring() {
 
   const defaults = {L1: 0, L2: 0, L3: 0, L4: 0, processor: 0, net: 0}
   const [autonData, setAutonData] = useState<AutonData>({
-    leftStartingArea: false,
+    leftStartingArea: 0,
     ...defaults
   })
   const [teleopData, setTeleopData] = useState<TeleopData>({
@@ -63,7 +63,7 @@ export default function Scoring() {
 
           {
             isTeleop ?
-              <DropDownPicker
+              <DropDownTemplate
                 open={open}
                 items={[
                   { label: "None", value: Barge.NONE },
@@ -78,15 +78,12 @@ export default function Scoring() {
                   cpy.barge = next(teleopData.barge)
                   setTeleopData(cpy)
                 }}
-                style={{
-                  marginTop: styles.spacing.marginTop,
-                  borderWidth: 3
-                }}
+                style={{marginTop: styles.spacing.marginTop}}
               /> :
               <CustomButton
                 onPress={() => {
                   var cpy = {...autonData} 
-                  cpy.leftStartingArea = !cpy.leftStartingArea
+                  cpy.leftStartingArea = (cpy.leftStartingArea+1)%2
                   setAutonData(cpy)
                 }}
                 style={[{

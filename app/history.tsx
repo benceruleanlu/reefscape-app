@@ -19,15 +19,18 @@ export default function History() {
     router.push("./newEvent")
   }
 
-  function getList() { return db.getAllSync<SQLiteRes>("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%';") }
+  function getList() { 
+    const db = SQLite.openDatabaseSync("events")
+    const res = db.getAllSync<SQLiteRes>("SELECT name FROM sqlite_schema WHERE type='table' AND name NOT LIKE 'sqlite_%';")
+    db.closeSync()
+    return res
+  }
 
-  const db = SQLite.openDatabaseSync("events");
-  const [events, setEvents] = useState(getList());
+  const [events, setEvents] = useState<SQLiteRes[]>();
 
   useFocusEffect(
     useCallback(() => {
       setEvents(getList())
-      return () => {}
     }, [])
   )
 

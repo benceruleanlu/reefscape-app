@@ -26,7 +26,7 @@ export const globalStyles = StyleSheet.create({
 });
 
 export function getPointsAuton(data: AutonData) {
-  return ((data.leftStartingArea) ? 3 : 0) 
+  return 3*data.leftStartingArea 
     + 3*data.L1 
     + 4*data.L2 
     + 6*data.L3 
@@ -36,7 +36,7 @@ export function getPointsAuton(data: AutonData) {
 }
 
 export type AutonData = {
-  leftStartingArea: boolean,
+  leftStartingArea: number,
 
   L1: number,
   L2: number,
@@ -74,5 +74,25 @@ export type TeleopData = {
 
   processor: number;
   net: number
+}
+
+export enum Penalty {
+  NONE,
+  YELLOW,
+  RED
+}
+
+export function getRp(rpData: RpData) {
+  return rpData.resultRp
+    + rpData.autonRp
+    + rpData.coralRp
+    + rpData.bargeRp
+}
+
+export type RpData = {
+  resultRp: number,
+  autonRp: number,
+  coralRp: number,
+  bargeRp: number,
 }
 

@@ -9,12 +9,27 @@ import ViewTemplate from "@/components/ViewTemplate";
 
 export default function NewEvent() {
   const router = useRouter();
-  const db = SQLite.openDatabaseSync("events");
 
   const [eventName, setEventName] = useState('');
 
   function addEvent() {
-    db.runSync(`CREATE TABLE IF NOT EXISTS ${eventName} (matchNumber TEXT PRIMARY KEY)`)
+    const db = SQLite.openDatabaseSync("events");
+    db.runSync(`CREATE TABLE IF NOT EXISTS "${eventName}" (
+                  matchNumber INTEGER, 
+                  scoutedTeam INTEGER, 
+
+                  matchResult Text, 
+                  autonPts INTEGER, 
+                  teleopPts INTEGER, 
+                  rankingPts INTEGER,
+
+                  coopertitionPoint INTEGER,
+                  penalty INTEGER, 
+
+                  autonData TEXT, 
+                  teleopData TEXT,
+                  rpData TEXT)`)
+    db.closeSync()
     router.back()
   }
 
