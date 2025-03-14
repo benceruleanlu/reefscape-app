@@ -1,5 +1,5 @@
 import DropDownTemplate from "@/components/DropDownTemplate";
-import { AutonData, colours, getPointsAuton, getPointsTeleop, getRp, globalStyles, Penalty, RpData } from "@/globals";
+import { colours, getPointsAuton, getPointsTeleop, getRp, globalStyles, Penalty, RpData } from "@/globals";
 import { useFocusEffect, useLocalSearchParams, useRouter } from "expo-router";
 import { StyleSheet, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -54,7 +54,7 @@ export default function PostGame() {
                   VALUES(
                     ${params.matchNumber}, 
                     ${params.scoutedTeam}, 
-                    "${["Loss", "Tie",'','', "Win"][rpData.resultRp]}", 
+                    "${["Loss", "Tie",'', "Win"][rpData.resultRp]}", 
                     ${getPointsAuton(JSON.parse(params.autonData.toString()))},
                     ${getPointsTeleop(JSON.parse(params.teleopData.toString()))},
                     ${getRp(rpData)},
@@ -65,7 +65,13 @@ export default function PostGame() {
                     '${JSON.stringify(rpData)}')`)
 
     db.closeSync()
-    router.replace({pathname: "../viewMatch", params: {eventName: params.eventName, matchNumber: params.matchNumber, scoutedTeam: params.scoutedTeam}})
+    router.replace({pathname: "../viewMatch", params: {
+      teamNumber: params.teamNumber,
+      username: params.username,
+      eventName: params.eventName, 
+      matchNumber: params.matchNumber, 
+      scoutedTeam: params.scoutedTeam
+    }})
   }
 
   return (

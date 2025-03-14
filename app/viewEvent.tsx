@@ -70,7 +70,9 @@ export default function ViewEvent() {
         renderItem={({item}) =>
           <CustomListItem 
             onPress={() => {
-              router.push({ pathname: './viewMatch', params: { eventName: event, matchNumber: item.matchNumber, scoutedTeam: item.scoutedTeam } })
+              params.matchNumber = item.matchNumber.toString()
+              params.scoutedTeam = item.scoutedTeam.toString()
+              router.push({ pathname: './viewMatch', params: params })
             }}
             text={`Match #${item.matchNumber}`}
           />
