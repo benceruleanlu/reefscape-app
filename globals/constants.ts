@@ -1,7 +1,11 @@
 import { StyleSheet } from "react-native";
 
 export const colours = {
-  border: "#666666"
+  bg: "#101010",
+  fg: "#e0e0e0",
+  view: "#282828",
+  blue: "#282878",
+  red: "#782828"
 }
 
 export const globalStyles = StyleSheet.create({
@@ -9,7 +13,7 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 40,
     paddingVertical: 20,
-    backgroundColor: "black"
+    backgroundColor: colours.bg
   },
 });
 

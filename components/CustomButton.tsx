@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   button: { 
     height: 40, 
     borderRadius: 20, 
-    backgroundColor: "white", 
+    backgroundColor: colours.fg, 
     justifyContent: "center",
   },
 
   buttonText: {
     textAlign: "center",
-    color: "black",
+    color: colours.bg,
     fontWeight: "600",
     fontSize: 16,
     fontFamily: "Inter"
