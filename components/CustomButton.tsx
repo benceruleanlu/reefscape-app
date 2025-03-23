@@ -1,4 +1,4 @@
-import { colours } from "@/globals";
+import { colours } from "@/globals/constants";
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
 export default function CustomButton(props: TouchableOpacityProps) {
@@ -16,13 +16,13 @@ const styles = StyleSheet.create({
   button: { 
     height: 40, 
     borderRadius: 20, 
-    backgroundColor: colours.blue, 
+    backgroundColor: "white", 
     justifyContent: "center",
   },
 
   buttonText: {
     textAlign: "center",
-    color: "white",
+    color: "black",
     fontWeight: "600",
     fontSize: 16,
     fontFamily: "Inter"
