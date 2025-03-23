@@ -9,8 +9,8 @@ export default function ViewTemplate(props: ScrollViewProps) {
       showsVerticalScrollIndicator={false}
       showsHorizontalScrollIndicator={false}
       keyboardShouldPersistTaps="handled"
-      style={globalStyles.rootView}
       {...props}
+      style={[globalStyles.rootView, props.style]}
     >
       <StatusBar style="dark"/>
       {props.children}

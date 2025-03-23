@@ -96,3 +96,10 @@ export type RpData = {
   bargeRp: number,
 }
 
+export type QRData = {
+  ip: string,
+  team: number,
+  event: string,
+  code: string
+}
+
