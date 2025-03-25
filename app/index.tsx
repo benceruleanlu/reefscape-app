@@ -1,5 +1,5 @@
 import CustomButton from "@/components/CustomButton";
-import { colours, globalStyles } from "@/globals/constants";
+import { globalStyles } from "@/globals/constants";
 import { ServerData } from "@/globals/types";
 import { CameraView, useCameraPermissions, BarcodeScanningResult } from 'expo-camera';
 import { useState } from "react";
@@ -43,18 +43,18 @@ export default function Index() {
     if (!res.data) return
     try {
       const data = JSON.parse(res.data) as ServerData 
-      if (!validIPv4(data.ip) || data.team > 11000) return
+      if (!validIPv4(data.ip)) return
       setServerData(data)
-      router.replace("./chooseMode")
+      router.replace("./name")
     } catch (e) { }
   }
 
   return (
     <SafeAreaView style={[globalStyles.rootView, { flexDirection: "column-reverse" }]}>
       <StatusBar style="light"/>
-
+      
       <CustomButton
-        style={{ backgroundColor: !permission ? colours.border : "white", marginTop: 30 }}
+        style={{ marginTop: 30 }}
         onPress={toggleScanning}
       >{scanning ? "Cancel" : "Scan Server QR"}</CustomButton>
 

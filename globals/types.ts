@@ -1,7 +1,8 @@
 export type ServerData = {
-  ip: string,
-  team: number,
-  event: string,
+  ip: string
+  port: number
+  team: string
+  event: string
   code: string
 }
 
@@ -19,52 +20,52 @@ export enum ActionType {
 }
 
 export type Action = {
-  type: ActionType,
+  type: ActionType
   time: number
 }
 
-export type PreGame = {
-  matchNumber: number,
-  teamNumber: number,
-  matchType: "qual" | "playoff",
-  alliance: "red" | "blue"
+export type Info = {
 }
 
 export type PostGame = {
   bargeResult: "no_attempt" | "parked" | "shallow_fail" | "shallow_success" | "deep_fail" | "deep_success",
 
-  role: "offense" | "defense" | "feeder" | "immobile",
-  driverAbility: 1 | 2 | 3 | 4 | 5,
-  traversesShallowCage: boolean,
+  role: "offense" | "defense" | "feeder" | "immobile"
+  driverAbility: 1 | 2 | 3 | 4 | 5
+  traversesShallowCage: boolean
 
-  coralPickup: "none" | "ground" | "station" | "both",
-  algaePickup: "none" | "ground" | "reef" | "both",
-  clearsReef: boolean,
+  coralPickup: "none" | "ground" | "station" | "both"
+  algaePickup: "none" | "ground" | "reef" | "both"
+  clearsReef: boolean
 
-  matchResult: "win" | "loss" | "tie",
-  autoRP: boolean,
-  coralRP: boolean,
-  bargeRP: boolean,
+  matchResult: "win" | "loss" | "tie"
+  autoRP: boolean
+  coralRP: boolean
+  bargeRP: boolean
 
-  coopertitionPoint: boolean,
+  coopertitionPoint: boolean
 
-  penaltiesForOpponent: number,
+  penaltiesForOpponent: number
   penaltyCard: "none" | "yellow" | "red"
 
   notes: "string"
 }
 
 export type MatchData = {
-  autoActions: Action[],
-  teleopActions: Action[],
+  matchLabel: string
+  teamNumber: number
+  alliance: "red" | "blue"
+
+  autoActions: Action[]
+  teleopActions: Action[]
   postGame: PostGame
 }
 
 export type MatchSummary = {
-  totalPoints: number,
-  autoPoints: number,
-  teleopPoints: number,
-  endgamePoints: number,
+  totalPoints: number
+  autoPoints: number
+  teleopPoints: number
+  endgamePoints: number
 
   rankingPoints: number
 }

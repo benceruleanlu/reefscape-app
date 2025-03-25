@@ -1,6 +1,10 @@
 import { colours } from "@/globals/constants";
 import { StyleSheet, Text, TouchableOpacity, TouchableOpacityProps } from "react-native";
 
+export function dynamicColour(active: boolean) {
+  return active ? colours.fg : colours.inactive
+}
+
 export default function CustomButton(props: TouchableOpacityProps) {
   return (
     <TouchableOpacity 
