@@ -1,14 +1,19 @@
+import Connection from "@/components/Connection";
 import CustomButton, { dynamicColour } from "@/components/CustomButton";
 import MatchItem, { MatchInfo } from "@/components/MatchItem";
 import { globalStyles } from "@/globals/constants";
 import { socket } from "@/globals/state";
-import { useState } from "react";
+import { useRouter } from "expo-router";
+import { useEffect, useReducer, useState } from "react";
 import { FlatList, Text } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function Online() {
+export default function Schedule() {
+  const router = useRouter()
+
   const [matches, setMatches] = useState<MatchInfo[] | null>(null)
   const [selected, setSelected] = useState<number | null>(null)
+  const [, forceUpdate] = useReducer(x => x+1, 0)
 
   if (matches == null) {
     socket?.on("schedule", (data) => {
@@ -17,8 +22,15 @@ export default function Online() {
     socket?.emit("get schedule")
   }
 
+  useEffect(() => {
+    const timeout = setTimeout(forceUpdate, 1e4)
+    return () => {clearTimeout(timeout)}
+  }, [])
+
   return (
     <SafeAreaView style={globalStyles.rootView}>
+      <Connection updated={forceUpdate}/>
+
       {
         matches == null ?
           <Text style={{ flex: 1, fontSize: 20 }}>Waiting for server</Text> :
@@ -39,7 +51,9 @@ export default function Online() {
 
       <CustomButton 
         style={{ backgroundColor: dynamicColour(selected != null), marginTop: 20 }}
-        onPress={() => {}}
+        onPress={() => {
+          router.push("./scoutMatch/beforeGame")
+        }}
       >Scout This Match</CustomButton>
     </SafeAreaView>
   )

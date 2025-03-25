@@ -16,27 +16,31 @@ type MatchItemProps = {
 
 export default function MatchItem(props: MatchItemProps) {
   const item = props.item
-  console.log(item.time)
   var timeUntil = (item.time - Date.now()) / 6e4;
+  const completed = timeUntil < 0
+  timeUntil = Math.abs(timeUntil)
 
   var timeUntilStr = "";
-  if (Math.abs(timeUntil) > 60*24) {
+  if (timeUntil > 60*24) {
     timeUntil = timeUntil / 60 / 24
     timeUntilStr = " day"
   }
-  else if (Math.abs(timeUntil) > 60) {
+  else if (timeUntil > 60) {
     timeUntil = timeUntil / 60
     timeUntilStr = " hour"
   } 
-  else timeUntilStr = " minute"
+  else {
+    timeUntil = Math.floor(timeUntil)
+    timeUntilStr = " minute"
+  }
 
   if (timeUntil >= 10) timeUntil = Math.floor(timeUntil)
   else timeUntil = Math.floor(timeUntil * 10) / 10
   timeUntilStr = timeUntil + timeUntilStr
 
-  if (timeUntil > 1) timeUntilStr += "s"
+  if (Math.abs(timeUntil) == 1) timeUntilStr += "s"
 
-  if (timeUntil < 0) timeUntilStr += " ago"
+  if (completed) timeUntilStr += " ago"
   else timeUntilStr = "in " + timeUntilStr
 
   return (

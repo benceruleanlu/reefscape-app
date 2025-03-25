@@ -1,9 +1,11 @@
+import Connection from "@/components/Connection";
 import CustomButton, { dynamicColour } from "@/components/CustomButton";
+import CustomTextInput from "@/components/CustomTextInput";
 import { colours, globalStyles } from "@/globals/constants";
 import { name, setName, socket } from "@/globals/state";
 import { useRouter } from "expo-router";
-import { useEffect, useState } from "react";
-import { FlatList, Text, TextInput, TouchableOpacity } from "react-native";
+import { useEffect, useReducer, useState } from "react";
+import { FlatList, Text, TouchableOpacity } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function Name() {
@@ -12,6 +14,8 @@ export default function Name() {
   const [names, setNames] = useState<string[] | null>(null)
   const [search, setSearch] = useState("")
   const [selected, setSelected] = useState<string | null>(null)
+
+  const [, forceUpdate] = useReducer(x => x+1, 0)
 
   useEffect(() => {
     socket?.once("names", (data) => {
@@ -30,16 +34,20 @@ export default function Name() {
   const selectedSearched = selected != null && isSearched(selected)
   return (
     <SafeAreaView style={globalStyles.rootView}>
+      <Connection updated={forceUpdate}/>
 
       <Text style={globalStyles.text}>Scouter Name</Text>
-      <TextInput
-        value={search}
-        onChangeText={setSearch}
-        style={globalStyles.text}
+      <CustomTextInput
+        viewProps={{ style: { marginTop: 10 } }}
+        textInputProps={{
+          value: search,
+          onChangeText: setSearch
+        }}
       />
 
       <FlatList 
-        style={{ flex: 1, marginTop: 20 }}
+        style={{ flex: 1, marginTop: 20, marginLeft: -20, marginRight: -20, paddingHorizontal: 40 }}
+        keyboardShouldPersistTaps="handled"
         data={names?.filter(isSearched)}
         renderItem={({item}) => {
           return ( 
