@@ -27,7 +27,6 @@ type ButtonProps = {
 }
 
 export default function ScoutingButtons(props: SelfProps) {
-  console.log("render")
   function appendAction(action: Action) {
     props.setActions([...props.actions, action])
   }
@@ -66,7 +65,7 @@ export default function ScoutingButtons(props: SelfProps) {
       style={[globalStyles.button, _props.style]}
       onPress={() => {
         if (_props.onPress) _props.onPress()
-        if (_props.appendType) appendAction({type: _props.appendType, time: msSinceStart()})
+        if (_props.appendType != undefined) appendAction({type: _props.appendType, time: msSinceStart()})
       }}
     >
       <Text style={globalStyles.buttonTextBig}>{_props.text}</Text>
@@ -77,7 +76,41 @@ export default function ScoutingButtons(props: SelfProps) {
     <View style={{flex:1, flexDirection: "row"}}>
       {
         props.leftArea ?
-          <View style={{flex: 2.2, marginRight: 40}}>
+          <View style={{flex: 2.2, marginRight: 40, flexDirection: "row"}}>
+            {
+              props.hasCoral ?
+                <View style={{flex: 1.5}}>
+                  <View style={{flex: 1, flexDirection: "row"}}>
+                    <Button
+                      style={{marginRight: 10}}
+                      onPress={() => {props.setHasCoral(false)}}
+                      appendType={ActionType.SCORE_L1}
+                      text="L1"
+                    />
+                    <Button
+                      onPress={() => {props.setHasCoral(false)}}
+                      appendType={ActionType.SCORE_L2}
+                      text="L2"
+                    />
+                  </View>
+                  <View style={{flex: 1, flexDirection: "row", marginTop: 10}}>
+                    <Button
+                      style={{marginRight: 10}}
+                      onPress={() => {props.setHasCoral(false)}}
+                      appendType={ActionType.SCORE_L3}
+                      text="L3"
+                    />
+                    <Button
+                      onPress={() => {props.setHasCoral(false)}}
+                      appendType={ActionType.SCORE_L4}
+                      text="L4"
+                    />
+                  </View>
+                </View> : <View style={{flex: 1.5}}/>
+            }
+
+            <View style={{flex: 1}}>
+            </View>
           </View> :
           <Button
             style={{flex: 2.2, marginRight: 40}}
@@ -95,12 +128,12 @@ export default function ScoutingButtons(props: SelfProps) {
         <Button
           style={{marginTop: 15}}
           onPress={() => {props.setHasAlgae(!props.hasAlgae)}}
-          appendType={props.hasCoral ? ActionType.DROP_ALGAE : ActionType.INTAKE_ALGAE}
-          text={(props.hasCoral ? "Drop" : "Intake") + " Algae"}
+          appendType={props.hasAlgae ? ActionType.DROP_ALGAE : ActionType.INTAKE_ALGAE}
+          text={(props.hasAlgae ? "Drop" : "Intake") + " Algae"}
         />
 
         <Button
-          style={{flex: 0.7, marginVertical: 30, backgroundColor: dynamicColour(props.actions.length > 0)}}
+          style={{flex: 0.75, marginVertical: 30, backgroundColor: dynamicColour(props.actions.length > 0)}}
           onPress={popAction}
           text="Undo"
         />
