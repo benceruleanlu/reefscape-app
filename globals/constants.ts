@@ -20,8 +20,32 @@ export const globalStyles = StyleSheet.create({
 
   text: {
     fontFamily: "Inter",
-    color: colours.fg,
-    fontSize: 16
+    fontSize: 16,
+    fontWeight: "600",
+    color: colours.fg
+  },
+
+  button: {
+    backgroundColor: colours.fg,
+    borderRadius: 10,
+    justifyContent: "center",
+    flex: 1
+  },
+  
+  buttonText: {
+    textAlign: "center",
+    color: colours.bg,
+    fontWeight: "600",
+    fontSize: 16,
+    fontFamily: "Inter"
+  },
+
+  buttonTextBig: {
+    textAlign: "center",
+    color: colours.bg,
+    fontWeight: "600",
+    fontSize: 24,
+    fontFamily: "Inter"
   }
 });
 

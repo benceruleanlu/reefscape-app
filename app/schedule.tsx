@@ -2,7 +2,7 @@ import Connection from "@/components/Connection";
 import CustomButton, { dynamicColour } from "@/components/CustomButton";
 import MatchItem, { MatchInfo } from "@/components/MatchItem";
 import { globalStyles } from "@/globals/constants";
-import { socket } from "@/globals/state";
+import { currMatch, socket } from "@/globals/state";
 import { useRouter } from "expo-router";
 import { useEffect, useReducer, useState } from "react";
 import { FlatList, Text } from "react-native";
@@ -33,7 +33,7 @@ export default function Schedule() {
 
       {
         matches == null ?
-          <Text style={{ flex: 1, fontSize: 20 }}>Waiting for server</Text> :
+          <Text style={[globalStyles.text, { flex: 1, fontSize: 20 }]}>Waiting for server</Text> :
           <FlatList 
             style={{ flex: 1 }}
             data={matches}
@@ -52,7 +52,12 @@ export default function Schedule() {
       <CustomButton 
         style={{ backgroundColor: dynamicColour(selected != null), marginTop: 20 }}
         onPress={() => {
-          router.push("./scoutMatch/beforeGame")
+          if (matches == null) return
+          if (selected == null) return
+          
+          currMatch.label = matches[selected].label
+
+          router.push("./scoutMatch/duringGame")
         }}
       >Scout This Match</CustomButton>
     </SafeAreaView>

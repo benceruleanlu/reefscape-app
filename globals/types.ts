@@ -9,11 +9,13 @@ export type ServerData = {
 export enum ActionType {
   LEAVE,
   INTAKE_CORAL,
+  DROP_CORAL,
   SCORE_L1,
   SCORE_L2,
   SCORE_L3,
   SCORE_L4,
   INTAKE_ALGAE,
+  DROP_ALGAE,
   SCORE_NET,
   MISS_NET,
   SCORE_PROCESSOR
@@ -24,11 +26,8 @@ export type Action = {
   time: number
 }
 
-export type Info = {
-}
-
 export type PostGame = {
-  bargeResult: "no_attempt" | "parked" | "shallow_fail" | "shallow_success" | "deep_fail" | "deep_success",
+  bargeResult: "no_attempt" | "parked" | "shallow_fail" | "shallow_success" | "deep_fail" | "deep_success"
 
   role: "offense" | "defense" | "feeder" | "immobile"
   driverAbility: 1 | 2 | 3 | 4 | 5
@@ -48,12 +47,12 @@ export type PostGame = {
   penaltiesForOpponent: number
   penaltyCard: "none" | "yellow" | "red"
 
-  notes: "string"
+  notes: string
 }
 
 export type MatchData = {
-  matchLabel: string
-  teamNumber: number
+  label: string
+  teamNumber: string,
   alliance: "red" | "blue"
 
   autoActions: Action[]
@@ -61,11 +60,3 @@ export type MatchData = {
   postGame: PostGame
 }
 
-export type MatchSummary = {
-  totalPoints: number
-  autoPoints: number
-  teleopPoints: number
-  endgamePoints: number
-
-  rankingPoints: number
-}

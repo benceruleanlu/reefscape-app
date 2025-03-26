@@ -46,7 +46,7 @@ export default function Name() {
       />
 
       <FlatList 
-        style={{ flex: 1, marginTop: 20, marginLeft: -20, marginRight: -20, paddingHorizontal: 40 }}
+        style={{ flex: 1, marginTop: 20, marginHorizontal: -40, paddingHorizontal: 40 }}
         keyboardShouldPersistTaps="handled"
         data={names?.filter(isSearched)}
         renderItem={({item}) => {

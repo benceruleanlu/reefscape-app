@@ -45,7 +45,7 @@ export default function Index() {
       const data = JSON.parse(res.data) as ServerData 
       if (!validIPv4(data.ip)) return
       setServerData(data)
-      router.push("./name")
+      router.replace("./name")
     } catch (e) { }
   }
 
