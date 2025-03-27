@@ -56,6 +56,8 @@ export default function Schedule() {
           if (selected == null) return
           
           currMatch.label = matches[selected].label
+          currMatch.teamNumber = ""
+          currMatch.alliance = "red"
 
           router.push("./scoutMatch/duringGame")
         }}

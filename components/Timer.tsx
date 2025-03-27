@@ -49,7 +49,7 @@ export default function Timer(props: { onStart: () => void, onEnd: () => void, o
           flex: undefined,
           width: 60,
           height: 30,
-          backgroundColor: startTime && secondsElapsed < 168 ? "#e07070" : colours.fg,
+          backgroundColor: startTime && secondsElapsed < 168 ? colours.buttonRed : colours.fg,
         }]}
       >
         <Text style={[globalStyles.buttonText]}>{startTime ? "End" : "Start"}</Text>

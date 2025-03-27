@@ -7,7 +7,9 @@ export const colours = {
   selected: "#484848",
   inactive: "#808080",
   blue: "#282878",
-  red: "#782828"
+  red: "#782828",
+  buttonRed: "#f09090",
+  buttonGreen: "#90f090"
 }
 
 export const globalStyles = StyleSheet.create({
@@ -21,7 +23,17 @@ export const globalStyles = StyleSheet.create({
   text: {
     fontFamily: "Inter",
     fontSize: 16,
-    fontWeight: "600",
+    fontWeight: "500",
+    color: colours.fg
+  },
+
+  textBig: {
+    marginTop: 40,
+    marginBottom: 5,
+    fontFamily: "Inter",
+    fontSize: 18,
+    lineHeight: 18,
+    fontWeight: "500",
     color: colours.fg
   },
 

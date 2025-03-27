@@ -3,7 +3,6 @@ export type ServerData = {
   port: number
   team: string
   event: string
-  code: string
 }
 
 export enum ActionType {
@@ -26,18 +25,26 @@ export type Action = {
   time: number
 }
 
-export type PostGame = {
-  bargeResult: "no_attempt" | "parked" | "shallow_fail" | "shallow_success" | "deep_fail" | "deep_success"
+export type BargeT = "no_attempt" | "parked" | "shallow_fail" | "shallow_success" | "deep_fail" | "deep_success"
+export type RoleT = "offense" | "defense" | "feeder" | "immobile"
+export type DriverAbilityT = 1 | 2 | 3 | 4 | 5
+export type CoralPickupT = "none" | "ground" | "station" | "both"
+export type AlgaePickupT = "none" | "ground" | "reef" | "both"
+export type MatchResultT = "win" | "loss" | "tie"
+export type PenaltyT = "none" | "yellow" | "red"
 
-  role: "offense" | "defense" | "feeder" | "immobile"
-  driverAbility: 1 | 2 | 3 | 4 | 5
+export type PostGame = {
+  bargeResult: BargeT
+
+  role: RoleT
+  driverAbility: DriverAbilityT
   traversesShallowCage: boolean
 
-  coralPickup: "none" | "ground" | "station" | "both"
-  algaePickup: "none" | "ground" | "reef" | "both"
+  coralPickup: CoralPickupT
+  algaePickup: AlgaePickupT
   clearsReef: boolean
 
-  matchResult: "win" | "loss" | "tie"
+  matchResult: MatchResultT
   autoRP: boolean
   coralRP: boolean
   bargeRP: boolean
@@ -45,7 +52,7 @@ export type PostGame = {
   coopertitionPoint: boolean
 
   penaltiesForOpponent: number
-  penaltyCard: "none" | "yellow" | "red"
+  penaltyCard: PenaltyT
 
   notes: string
 }

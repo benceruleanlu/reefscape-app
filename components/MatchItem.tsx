@@ -3,7 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 
 export type MatchInfo = {
   label: string
-  time: number
+  times: {[key: string] : number}
   redAlliance: (string | null)[]
   blueAlliance: (string | null)[]
 }
@@ -16,32 +16,38 @@ type MatchItemProps = {
 
 export default function MatchItem(props: MatchItemProps) {
   const item = props.item
-  var timeUntil = (item.time - Date.now()) / 6e4;
-  const completed = timeUntil < 0
-  timeUntil = Math.abs(timeUntil)
-
   var timeUntilStr = "";
-  if (timeUntil > 60*24) {
-    timeUntil = timeUntil / 60 / 24
-    timeUntilStr = " day"
+
+  if (item.times.estimatedQueueTime < Date.now() && item.times.estimatedStartTime) {
+    timeUntilStr = "now"
   }
-  else if (timeUntil > 60) {
-    timeUntil = timeUntil / 60
-    timeUntilStr = " hour"
-  } 
   else {
-    timeUntil = Math.floor(timeUntil)
-    timeUntilStr = " minute"
+    var timeUntil = (item.times.estimatedQueueTime - Date.now()) / 6e4;
+    const completed = timeUntil < 0
+    timeUntil = Math.abs(timeUntil)
+
+    if (timeUntil > 60*24) {
+      timeUntil = timeUntil / 60 / 24
+      timeUntilStr = " day"
+    }
+    else if (timeUntil > 60) {
+      timeUntil = timeUntil / 60
+      timeUntilStr = " hour"
+    } 
+    else {
+      timeUntil = Math.floor(timeUntil)
+      timeUntilStr = " minute"
+    }
+
+    if (timeUntil >= 10) timeUntil = Math.floor(timeUntil)
+      else timeUntil = Math.floor(timeUntil * 10) / 10
+    timeUntilStr = timeUntil + timeUntilStr
+
+    if (Math.abs(timeUntil) != 1) timeUntilStr += "s"
+
+    if (completed) timeUntilStr += " ago"
+      else timeUntilStr = "in " + timeUntilStr
   }
-
-  if (timeUntil >= 10) timeUntil = Math.floor(timeUntil)
-  else timeUntil = Math.floor(timeUntil * 10) / 10
-  timeUntilStr = timeUntil + timeUntilStr
-
-  if (Math.abs(timeUntil) == 1) timeUntilStr += "s"
-
-  if (completed) timeUntilStr += " ago"
-  else timeUntilStr = "in " + timeUntilStr
 
   return (
     <View style={{ marginTop: 20 }}>

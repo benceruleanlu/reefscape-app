@@ -1,7 +1,7 @@
 import { Action, ActionType } from "@/globals/types"
 import { Dispatch, SetStateAction } from "react"
 import { Text, TouchableOpacity, View, ViewStyle } from "react-native"
-import { globalStyles } from "@/globals/constants"
+import { colours, globalStyles } from "@/globals/constants"
 import { msSinceStart } from "@/globals/state"
 import { dynamicColour } from "./CustomButton"
 
@@ -77,40 +77,68 @@ export default function ScoutingButtons(props: SelfProps) {
       {
         props.leftArea ?
           <View style={{flex: 2.2, marginRight: 40, flexDirection: "row"}}>
-            {
-              props.hasCoral ?
-                <View style={{flex: 1.5}}>
-                  <View style={{flex: 1, flexDirection: "row"}}>
-                    <Button
-                      style={{marginRight: 10}}
-                      onPress={() => {props.setHasCoral(false)}}
-                      appendType={ActionType.SCORE_L1}
-                      text="L1"
-                    />
-                    <Button
-                      onPress={() => {props.setHasCoral(false)}}
-                      appendType={ActionType.SCORE_L2}
-                      text="L2"
-                    />
-                  </View>
-                  <View style={{flex: 1, flexDirection: "row", marginTop: 10}}>
-                    <Button
-                      style={{marginRight: 10}}
-                      onPress={() => {props.setHasCoral(false)}}
-                      appendType={ActionType.SCORE_L3}
-                      text="L3"
-                    />
-                    <Button
-                      onPress={() => {props.setHasCoral(false)}}
-                      appendType={ActionType.SCORE_L4}
-                      text="L4"
-                    />
-                  </View>
-                </View> : <View style={{flex: 1.5}}/>
-            }
+            
+            <View style={{flex: 1.5, marginRight: 20}}>
+              {
+                props.hasCoral ?
+                  <View style={{flex: 2.2}}>
+                    <View style={{flex: 1, flexDirection: "row"}}>
+                      <Button
+                        style={{marginRight: 10}}
+                        onPress={() => {props.setHasCoral(false)}}
+                        appendType={ActionType.SCORE_L1}
+                        text="L1"
+                      />
+                      <Button
+                        onPress={() => {props.setHasCoral(false)}}
+                        appendType={ActionType.SCORE_L2}
+                        text="L2"
+                      />
+                    </View>
+                    <View style={{flex: 1, flexDirection: "row", marginTop: 10}}>
+                      <Button
+                        style={{marginRight: 10}}
+                        onPress={() => {props.setHasCoral(false)}}
+                        appendType={ActionType.SCORE_L3}
+                        text="L3"
+                      />
+                      <Button
+                        onPress={() => {props.setHasCoral(false)}}
+                        appendType={ActionType.SCORE_L4}
+                        text="L4"
+                      />
+                    </View>
+                  </View> : <View style={{flex: 2.2}}/>
+              }
 
-            <View style={{flex: 1}}>
+              {
+                props.hasAlgae ? 
+                  <Button
+                    style={{flex: 1, marginTop: 20, marginRight: -10}}
+                    onPress={() => {props.setHasAlgae(false)}}
+                    appendType={ActionType.SCORE_PROCESSOR}
+                    text="Score Processor"
+                  /> : <View style={{flex: 1, marginTop: 20, marginRight: -10}}/>
+              }
             </View>
+
+            {
+              props.hasAlgae ?
+                <View style={{flex: 1}}>
+                  <Button
+                    style={{backgroundColor: colours.buttonGreen}}
+                    onPress={() => {props.setHasAlgae(false)}}
+                    appendType={ActionType.SCORE_NET}
+                    text="Score Net"
+                  />
+                  <Button
+                    style={{backgroundColor: colours.buttonRed, marginTop: 10}}
+                    onPress={() => {props.setHasAlgae(false)}}
+                    appendType={ActionType.MISS_NET}
+                    text="Miss Net"
+                  />
+                </View> : <View style={{flex: 1}}/>
+            }
           </View> :
           <Button
             style={{flex: 2.2, marginRight: 40}}

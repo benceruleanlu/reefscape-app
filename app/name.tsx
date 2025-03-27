@@ -24,7 +24,6 @@ export default function Name() {
     socket?.once("connect", () => {
       socket?.emit("get names")
     })
-    socket?.connect()
   }, [0])
 
   function isSearched(val: string) {
