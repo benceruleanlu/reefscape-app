@@ -187,7 +187,7 @@ export default function BeforeGame() {
           setValue={setPenlatyCard}
           options={[
             { label: "None", value: "none" },
-            { label: "Yellow", value: "yellow", color: "#f0f090" },
+            { label: "Yellow", value: "yellow", color: colours.buttonYellow },
             { label: "Red", value: "red", color: colours.buttonRed },
           ]}
         />

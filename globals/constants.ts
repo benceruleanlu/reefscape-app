@@ -9,7 +9,8 @@ export const colours = {
   blue: "#282878",
   red: "#782828",
   buttonRed: "#f09090",
-  buttonGreen: "#90f090"
+  buttonGreen: "#90f090",
+  buttonYellow: "#f0f090"
 }
 
 export const globalStyles = StyleSheet.create({

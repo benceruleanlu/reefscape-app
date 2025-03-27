@@ -48,7 +48,7 @@ export default function Connection(props: { updated?: () => void }) {
     >
       <Text style={[globalStyles.text, { 
         fontSize: 14, 
-        color: status == "Connected" ? colours.buttonGreen : status == "Disconnected" ? colours.buttonRed : "#f0f090"
+        color: status == "Connected" ? colours.buttonGreen : status == "Disconnected" ? colours.buttonRed : colours.buttonYellow
       }]}
       >{status}</Text>
     </TouchableOpacity>

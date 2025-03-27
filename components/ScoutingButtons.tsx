@@ -79,7 +79,7 @@ export default function ScoutingButtons(props: SelfProps) {
             <View style={{flex: 1.5, marginRight: 20}}>
               {
                 props.hasCoral ?
-                  <View style={{flex: 2.7}}>
+                  <View style={{flex: 2.8}}>
                     <View style={{flex: 1, flexDirection: "row"}}>
                       <Button
                         style={{marginRight: 10}}
@@ -107,12 +107,12 @@ export default function ScoutingButtons(props: SelfProps) {
                       />
                     </View>
                     <Button
-                      style={{flex: 0.9, marginTop: 10, backgroundColor: colours.buttonRed}}
+                      style={{flex: 0.8, marginTop: 10, backgroundColor: colours.buttonRed}}
                       onPress={() => {props.setHasCoral(false)}}
                       appendType={ActionType.MISS_CORAL}
                       text="Miss Coral"
                     />
-                  </View> : <View style={{flex: 2.9}}/>
+                  </View> : <View style={{flex: 2.8}}/>
               }
 
               {

@@ -6,6 +6,7 @@ export type MatchInfo = {
   times: {[key: string] : number}
   redAlliance: (string | null)[]
   blueAlliance: (string | null)[]
+  scoutedTeam: string
 }
 
 type MatchItemProps = {
@@ -49,6 +50,15 @@ export default function MatchItem(props: MatchItemProps) {
       else timeUntilStr = "in " + timeUntilStr
   }
 
+  const TeamNumber = (props: {number: string | null}) => (
+    <Text 
+      style={[styles.teamNumber, {
+        color : props.number == item.scoutedTeam ? colours.buttonYellow : colours.fg
+      }]}
+    >{props.number}</Text>
+  )
+
+
   return (
     <View style={{ marginTop: 20 }}>
       <TouchableOpacity 
@@ -57,7 +67,7 @@ export default function MatchItem(props: MatchItemProps) {
           paddingLeft: 16, 
           backgroundColor: props.selected ? colours.selected : colours.view, 
           borderTopRightRadius: 10, 
-          borderTopLeftRadius: 10 ,
+          borderTopLeftRadius: 10,
           flexDirection: "row"
         }, props.selected ? {} : { borderRadius: 10 }]}
         onPress={props.onPress}
@@ -69,17 +79,17 @@ export default function MatchItem(props: MatchItemProps) {
       {
         props.selected &&
           <View style={[styles.alliance, { backgroundColor: colours.red }]}>
-            <Text style={styles.teamNumber}>{item.redAlliance[0]}</Text>
-            <Text style={styles.teamNumber}>{item.redAlliance[1]}</Text>
-            <Text style={styles.teamNumber}>{item.redAlliance[2]}</Text>
+            <TeamNumber number={item.redAlliance[0]}/>
+            <TeamNumber number={item.redAlliance[1]}/>
+            <TeamNumber number={item.redAlliance[2]}/>
           </View> 
       }
       {
         props.selected && 
           <View style={[styles.alliance, { backgroundColor: colours.blue, borderBottomRightRadius: 10, borderBottomLeftRadius: 10 }]}>
-            <Text style={styles.teamNumber}>{item.blueAlliance[0]}</Text>
-            <Text style={styles.teamNumber}>{item.blueAlliance[1]}</Text>
-            <Text style={styles.teamNumber}>{item.blueAlliance[2]}</Text>
+            <TeamNumber number={item.blueAlliance[0]}/>
+            <TeamNumber number={item.blueAlliance[1]}/>
+            <TeamNumber number={item.blueAlliance[2]}/>
           </View>
       }
 
