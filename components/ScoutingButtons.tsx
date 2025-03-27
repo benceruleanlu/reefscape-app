@@ -15,8 +15,6 @@ type SelfProps = {
 
   actions: Action[]
   setActions: Dispatch<SetStateAction<Action[]>>
-
-  text: string
 }
 
 type ButtonProps = {
@@ -43,6 +41,7 @@ export default function ScoutingButtons(props: SelfProps) {
       case ActionType.SCORE_L2:
       case ActionType.SCORE_L3:
       case ActionType.SCORE_L4:
+      case ActionType.MISS_CORAL:
         props.setHasCoral(true)
         break
       case ActionType.DROP_ALGAE:
@@ -77,11 +76,10 @@ export default function ScoutingButtons(props: SelfProps) {
       {
         props.leftArea ?
           <View style={{flex: 2.2, marginRight: 40, flexDirection: "row"}}>
-            
             <View style={{flex: 1.5, marginRight: 20}}>
               {
                 props.hasCoral ?
-                  <View style={{flex: 2.2}}>
+                  <View style={{flex: 2.7}}>
                     <View style={{flex: 1, flexDirection: "row"}}>
                       <Button
                         style={{marginRight: 10}}
@@ -108,17 +106,23 @@ export default function ScoutingButtons(props: SelfProps) {
                         text="L4"
                       />
                     </View>
-                  </View> : <View style={{flex: 2.2}}/>
+                    <Button
+                      style={{flex: 0.9, marginTop: 10, backgroundColor: colours.buttonRed}}
+                      onPress={() => {props.setHasCoral(false)}}
+                      appendType={ActionType.MISS_CORAL}
+                      text="Miss Coral"
+                    />
+                  </View> : <View style={{flex: 2.9}}/>
               }
 
               {
                 props.hasAlgae ? 
                   <Button
-                    style={{flex: 1, marginTop: 20, marginRight: -10}}
+                    style={{flex: 0.9,  marginTop: 20, marginRight: -10}}
                     onPress={() => {props.setHasAlgae(false)}}
                     appendType={ActionType.SCORE_PROCESSOR}
                     text="Score Processor"
-                  /> : <View style={{flex: 1, marginTop: 20, marginRight: -10}}/>
+                  /> : <View style={{flex: 0.9, marginTop: 20, marginRight: -10}}/>
               }
             </View>
 
@@ -149,24 +153,23 @@ export default function ScoutingButtons(props: SelfProps) {
 
       <View style={{flex: 1}}>
         <Button
-          onPress={() => {props.setHasCoral(!props.hasCoral)}}
-          appendType={props.hasCoral ? ActionType.DROP_CORAL : ActionType.INTAKE_CORAL}
+          style={{ backgroundColor: dynamicColour(props.leftArea)}}
+          onPress={() => {if (props.leftArea) props.setHasCoral(!props.hasCoral)}}
+          appendType={!props.leftArea ? undefined : props.hasCoral ? ActionType.DROP_CORAL : ActionType.INTAKE_CORAL}
           text={(props.hasCoral ? "Drop" : "Intake") + " Coral"}
         />
         <Button
-          style={{marginTop: 15}}
-          onPress={() => {props.setHasAlgae(!props.hasAlgae)}}
-          appendType={props.hasAlgae ? ActionType.DROP_ALGAE : ActionType.INTAKE_ALGAE}
+          style={{marginTop: 15, backgroundColor: dynamicColour(props.leftArea)}}
+          onPress={() => {if (props.leftArea) props.setHasAlgae(!props.hasAlgae)}}
+          appendType={!props.leftArea ? undefined : props.hasAlgae ? ActionType.DROP_ALGAE : ActionType.INTAKE_ALGAE}
           text={(props.hasAlgae ? "Drop" : "Intake") + " Algae"}
         />
 
         <Button
-          style={{flex: 0.75, marginVertical: 30, backgroundColor: dynamicColour(props.actions.length > 0)}}
+          style={{flex: 0.8, marginVertical: 30, backgroundColor: dynamicColour(props.actions.length > 0)}}
           onPress={popAction}
           text="Undo"
         />
-
-        <Text style={[globalStyles.text, {textAlign: "right"}]}>{props.text}</Text>
       </View>
     </View>
   )

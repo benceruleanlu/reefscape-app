@@ -13,6 +13,7 @@ export enum ActionType {
   SCORE_L2,
   SCORE_L3,
   SCORE_L4,
+  MISS_CORAL,
   INTAKE_ALGAE,
   DROP_ALGAE,
   SCORE_NET,

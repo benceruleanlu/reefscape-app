@@ -4,13 +4,13 @@ import { useEffect, useState } from "react";
 import { Text, TouchableOpacity } from "react-native";
 
 export default function Connection(props: { updated?: () => void }) {
-  const [status, setStatus] = useState<"Connected" | "Disconnected">(
-    socket?.connected ? "Connected" : "Disconnected"
+  const [status, setStatus] = useState<"Connected" | "Reconnecting" | "Disconnected">(
+    socket?.connected ? "Connected" : socket?.active ? "Reconnecting" : "Disconnected"
   )
 
   useEffect(() => {
     const disconnectListener = () => {
-      setStatus("Disconnected")
+      setStatus(socket?.active ? "Reconnecting" : "Disconnected")
       if (props.updated) props.updated()
     }
 
@@ -21,7 +21,7 @@ export default function Connection(props: { updated?: () => void }) {
     socket?.on("disconnect", disconnectListener)
     socket?.on("connect", connectListener)
 
-    if (status == "Disconnected") socket?.connect()
+    if (!socket?.active && !socket?.connected) socket?.connect()
 
     return () => { 
       socket?.removeListener("disconnect", disconnectListener) 
@@ -42,10 +42,13 @@ export default function Connection(props: { updated?: () => void }) {
         paddingHorizontal: 15,
         marginBottom: 15
       }}
+      onPress={() => {
+        if (status == "Disconnected") socket?.connect()
+      }}
     >
       <Text style={[globalStyles.text, { 
         fontSize: 14, 
-        color: status == "Connected" ? colours.buttonGreen : colours.buttonRed 
+        color: status == "Connected" ? colours.buttonGreen : status == "Disconnected" ? colours.buttonRed : "#f0f090"
       }]}
       >{status}</Text>
     </TouchableOpacity>

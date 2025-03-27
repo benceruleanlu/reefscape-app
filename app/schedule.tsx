@@ -25,7 +25,7 @@ export default function Schedule() {
   useEffect(() => {
     const timeout = setTimeout(forceUpdate, 1e4)
     return () => {clearTimeout(timeout)}
-  }, [])
+  })
 
   return (
     <SafeAreaView style={globalStyles.rootView}>

@@ -48,7 +48,10 @@ export default function DuringGame() {
               <TouchableOpacity style={[globalStyles.button, { width: 40, height: 30, flex: undefined }]} onPress={() => {setHasCoral(!hasCoral)}}>
                 <Text style={globalStyles.buttonText}>{hasCoral ? "Yes" : "No"}</Text>
               </TouchableOpacity>
-            </View> : <View/>
+            </View> : 
+            <View style={{position: "absolute", alignSelf: "flex-end", justifyContent: "center", height: 30}}>
+              <Text style={globalStyles.text}>{isTeleop ? "Teleoperated" : "Autonomous"}</Text>
+            </View>
         }
 
         {
@@ -59,7 +62,6 @@ export default function DuringGame() {
               hasAlgae={hasAlgae} setHasAlgae={setHasAlgae}
               actions={isTeleop ? teleopActions : autoActions}
               setActions={isTeleop ? setTeleopActions : setAutoActions}
-              text={isTeleop ? "Teleoperated" : "Autonomous"}
             />
         }
       </View>
